@@ -1,16 +1,10 @@
-import AutoCompleteInput from "./components/AutoCompleteInput/AutoCompleteInput.tsx";
-import { getStreetSuggestions } from "./services/api.ts";
+import AddressForm from './components/AddressForm/AddressForm';
 
 function App() {
-  return (
-    <>
-      <AutoCompleteInput
-        label="Street Address"
-        getSuggestions={getStreetSuggestions}
-        placeholder="Enter street address"
-      />
-    </>
-  );
+  return <div className="main">
+    <h1>Address validator</h1>
+    <AddressForm />
+  </div>
 }
 
 export default App;

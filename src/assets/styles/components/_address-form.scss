@@ -1,0 +1,20 @@
+@use "../utils/variables" as *;
+
+
+.address-form {
+  max-width: 30rem;
+}
+
+.address-row-1 {
+  display: grid;
+  grid-template-columns: 1fr 0.3fr;
+  grid-gap: 1rem;
+  padding-top: $spacing-sm;
+}
+
+.address-row-2 {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+  grid-gap: 1rem;
+  padding-top: $spacing-sm;
+}
