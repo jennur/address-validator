@@ -26,3 +26,9 @@ h2 {
 .container {
   margin-top: $spacing-lg;
 }
+
+.error-message {
+  color: $input-error;
+  font-size: 0.8rem;
+  margin: $spacing-sm 0;
+}

@@ -18,6 +18,7 @@ function AddressForm() {
   const [streetSuggestions, setStreetSuggestions] = useState<IStreetSuggestion[]>([]);
   const [streetNumberSuggestions, setStreetNumberSuggestions] = useState<IStreetNumberSuggestion[]>([]);
   const [isValid, setIsValid] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [debounceTimeout, setDebounceTimeout] = useState(null);
   
   // TODO: Can be moved to a custom hook
@@ -29,6 +30,7 @@ function AddressForm() {
 
   async function handleStreetNameChange(event) {
     setIsValid(false);
+    setErrorMessage("");
     const value = event.target?.value || "";
 
     setAddress({
@@ -47,6 +49,7 @@ function AddressForm() {
         setStreetSuggestions(suggestions);
       } catch (error) {
         console.error("[handleStreetNameChange]", error);
+        setErrorMessage("Error fetching streets");
         setStreetSuggestions([]);
       }
     }, 300);
@@ -65,6 +68,7 @@ function AddressForm() {
 
   async function handleStreetNumberChange(event) {
     setIsValid(false);
+    setErrorMessage("");
     const value = event.target?.value || "";
     setAddress((prev) => ({ ...prev, streetNumber: value }));
 
@@ -74,6 +78,7 @@ function AddressForm() {
         setStreetNumberSuggestions(suggestions);
       } catch (error) {
         console.error("[handleStreetNumberChange]", error);
+        setErrorMessage("Error fetching street numbers");
         setStreetNumberSuggestions([]);
       }
     }, 300);
@@ -116,6 +121,9 @@ function AddressForm() {
           <TextInput label="City" value={address.city} readOnly isValid={isValid} />
         </div>
       </form>
+      <div className="error-message">
+        {errorMessage && <p>{errorMessage}</p>}
+      </div>
 
       {isValid && (
         <div className="container">
