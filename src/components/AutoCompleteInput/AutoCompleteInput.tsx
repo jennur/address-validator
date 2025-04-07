@@ -1,41 +1,26 @@
-import { useState } from "react";
 import { TAutoCompleteInputProps } from "./AutoCompleteInput.d";
 
 function AutoCompleteInput({ 
-  label = "Input",
-  placeholder = "Enter text",
-  getSuggestions,
+  label,
+  placeholder,
+  handleInputChange,
+  handleOptionClick,
+  inputValue= "",
+  inputSuggestions= [],
+  isValid = false
 }: TAutoCompleteInputProps) {
-  const [inputValue, setInputValue] = useState<string>("");
-  const [inputSuggestions, setInputSuggestions] = useState<TInputSuggestion[]>([]);
-  const [isValid, setIsValid] = useState<boolean>(true);
 
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setIsValid(false);
-    const value = event.target.value;
-    setInputValue(value);
-    const suggestions = getSuggestions(value);
-    setInputSuggestions(suggestions);
-  }
+  // TODO: Implement handling of error cases
 
-  function handleOptionClick(option: TInputSuggestion) {
-    setInputValue(option.label);
-    setIsValid(true);
-    setInputSuggestions([]);
-  }
-
-  const optionElems = inputSuggestions?.map((option: TInputSuggestion) => (
+  // TODO: Consider moving the suggestions list to a separate component
+  const optionElems = inputSuggestions?.map((option: IInputSuggestion) => (
     <li
       key={option.id}
       className="suggestion"
       role="option"
       tabIndex={0}
       onClick={() => handleOptionClick(option)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          handleOptionClick(option);
-        }
-      }}
+      onKeyDown={(e) => e.key === 'Enter' && handleOptionClick(option)}
     >
       {option.label}
     </li>
