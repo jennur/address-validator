@@ -18,6 +18,14 @@ function AddressForm() {
   const [streetSuggestions, setStreetSuggestions] = useState<IStreetSuggestion[]>([]);
   const [streetNumberSuggestions, setStreetNumberSuggestions] = useState<IStreetNumberSuggestion[]>([]);
   const [isValid, setIsValid] = useState<boolean>(false);
+  const [debounceTimeout, setDebounceTimeout] = useState(null);
+  
+  // TODO: Can be moved to a custom hook
+  function debounce(func: any, delay: number) {
+      if (debounceTimeout) clearTimeout(debounceTimeout);
+      const timeout = setTimeout(() => func(), delay);
+      setDebounceTimeout(timeout);
+  }
 
   async function handleStreetNameChange(event) {
     setIsValid(false);
@@ -33,13 +41,15 @@ function AddressForm() {
 
     if (value === "") return;
 
-    try {
-      const suggestions = await getStreetSuggestions(value);
-      setStreetSuggestions(suggestions);
-    } catch (error) {
-      console.error("[handleStreetNameChange]", error);
-      setStreetSuggestions([]);
-    }
+    debounce(async () => {
+      try {
+        const suggestions = await getStreetSuggestions(value);
+        setStreetSuggestions(suggestions);
+      } catch (error) {
+        console.error("[handleStreetNameChange]", error);
+        setStreetSuggestions([]);
+      }
+    }, 300);
   }
 
   function handleStreetOptionClick(option: IStreetSuggestion) {
@@ -58,14 +68,16 @@ function AddressForm() {
     const value = event.target?.value || "";
     setAddress((prev) => ({ ...prev, streetNumber: value }));
 
-    try {
-      const suggestions = await getStreetNumberSuggestions(address.streetIds, value);
-      setStreetNumberSuggestions(suggestions);
-    } catch (error) {
-      console.error("[handleStreetNumberChange]", error);
-      setStreetNumberSuggestions([]);
+    debounce(async () => {
+      try {
+        const suggestions = await getStreetNumberSuggestions(address.streetIds, value);
+        setStreetNumberSuggestions(suggestions);
+      } catch (error) {
+        console.error("[handleStreetNumberChange]", error);
+        setStreetNumberSuggestions([]);
+      }
+    }, 300);
     }
-  }
 
   function handleStreetNumberOptionClick(option: IStreetNumberSuggestion) {
     setAddress((prev) => ({
