@@ -21,7 +21,7 @@ function AddressForm() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [debounceTimeout, setDebounceTimeout] = useState(null);
   
-  // TODO: Can be moved to a custom hook
+  // TODO: Should be changed to be a helper function instead, not relying on state
   function debounce(func: any, delay: number) {
       if (debounceTimeout) clearTimeout(debounceTimeout);
       const timeout = setTimeout(() => func(), delay);
