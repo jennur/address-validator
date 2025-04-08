@@ -49,7 +49,7 @@ The application should now be running at `http://localhost:4173/`.
 ## The Address Form
 
 ### Confirming a street name
-The address form lets you enter a street address and will then make a call to `/NO/streetSearch/{streetName}`. If any results found, a dropdown will appear with suggestions that match what you entered in the input field. 
+The address form lets you enter a street address and will then make a call to `/NO/streetSearch/{inputValue}`. If any results found, a dropdown will appear with suggestions that match what you entered in the input field. 
 
 The city name will show next to the street name in the dropdown, and will be autocompleted once selected.
 
