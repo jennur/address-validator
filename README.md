@@ -54,7 +54,7 @@ The address form lets you enter a street address and will then make a call to `/
 The city name will show next to the street name in the dropdown, and will be autocompleted once selected.
 
 ### Confirming a street number 
-Once you have selected an option from the suggestions-dropdown, the form will have the necessary `streetIds` available to query the street numbers. Now, when you enter a street number in the street number field, a call will be made to `/NO/streetNumberSearch/{streetIds}?streetNumber={inputValue}`. If any results found, a dropdown will appear with matching street numbers. If an entrance number is available, this will be displayed next to the street number. For duplicated street numbers, the building type will be specified next to the numbers. 
+Once you have selected an option from the suggestions-dropdown, the form will have the necessary `streetIds` available to query the street numbers. Now, when you enter a street number in the street number field, a call will be made to `/NO/streetNumberSearch/{streetIds}?streetNumber={inputValue}`. If any results found, a dropdown will appear with matching street numbers. If an entrance value is available, this will be displayed next to the street number. For duplicated street numbers, the building type will be specified next to the numbers. 
 
 Selecting a street number from the dropdown will autocomplete the postal code.
 
@@ -69,11 +69,11 @@ There are some missing auto complete fields that could be implemented to enhance
 
 ### DX Issues
 #### Incomplete components
-1. The `TextInput` component could be made more reusable by supporting more attributes and event handlers. It should also be able to display an error message.
+1. The `TextInput` component could be made more reusable by supporting more attributes and event handlers. It should also be able to display an error message and help text.
 2. In the `AutoCompleteInput` the suggestion list could be moved to a separate component, e.g. `DropdownList` to make it reusable for other types of dropdown components. The `IInputSuggestion` interface should then be renamed to `IDropdownItem`.
 
 #### Component styling
-The styling for each component should be organized within each component folder to make everything component-specific immediately available to the developer – although this might be a matter of personal preference.
+The styling for each component should be organized within each component folder to make all component-specific resources immediately available to the developer – although this might be a matter of personal preference.
 
 ### UX issues
 There are several layout and/or UX issues that should be improved.
@@ -82,7 +82,7 @@ There are several layout and/or UX issues that should be improved.
 The dropdown does not have a max height nor scrolling within the container – the entire page will scroll.
 
 #### No indications of no results
-There is currently nothing indicating that no results were found during the data fetching, if this was the case. 
+There is currently nothing indicating that no results were found during the data fetching, if this was the case. This is bad as the user will not know whether an error occurred or if the search simply returned no results.
 
 #### Limited error handling
 Currently, the UI has limited error messages when something does not work as expected. This needs to be improved.
