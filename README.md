@@ -49,28 +49,43 @@ The application should now be running at `http://localhost:4173/`.
 ## The Address Form
 
 ### Confirming a street name
-The address form lets you enter a street address and will then make a call to `/NO/streetSearch/{streetName}`. If any results found, a dropdown will appear with suggestions that match what you entered in the input field. The street name result will show the city name, which will be autocompleted once selected.
+The address form lets you enter a street address and will then make a call to `/NO/streetSearch/{streetName}`. If any results found, a dropdown will appear with suggestions that match what you entered in the input field. 
+
+The city name will show next to the street name in the dropdown, and will be autocompleted once selected.
 
 ### Confirming a street number 
-Once you have selected one of the options listed in the suggestions-dropdown, the form will have the necessary `streetIds` available to query the street numbers. Now, when you enter a street number in the street number field, a call will be made to `/NO/streetNumberSearch/{streetIds}` with your input as a parameter. If any results found, a dropdown will appear with matching street numbers. If an entrance number is available, this will be displayed next to the street number. For duplicated street numbers, the building type will be specified next to the numbers. Selecting a street number from the dropdown will autocomplete the postal code.
+Once you have selected an option from the suggestions-dropdown, the form will have the necessary `streetIds` available to query the street numbers. Now, when you enter a street number in the street number field, a call will be made to `/NO/streetNumberSearch/{streetIds}?streetNumber={inputValue}`. If any results found, a dropdown will appear with matching street numbers. If an entrance number is available, this will be displayed next to the street number. For duplicated street numbers, the building type will be specified next to the numbers. 
+
+Selecting a street number from the dropdown will autocomplete the postal code.
 
 ### Confirmed address
 After selecting a street number, the address is complete, as postal code and city was autocompleted from the street name and number suggestions. The complete address object is available in the local state of the `AddressForm` component.
 
 ## Known issues / TODOs
-Some of the known issues are listed here, but the list is not complete.
+Some of the known issues are listed here, along with TODO comments within the code, but the list is not complete.
 
 ### Missing fields
-There are some missing fields that could be implemented, such as floors.
+There are some missing auto complete fields that could be implemented to enhance the address verification, such as floors and households.
+
+### DX Issues
+#### Incomplete components
+1. The `TextInput` component could be made more reusable by supporting more attributes and event handlers. It should also be able to display an error message.
+2. In the `AutoCompleteInput` the suggestion list could be moved to a separate component, e.g. `DropdownList` to make it reusable for other types of dropdown components. The `IInputSuggestion` interface should then be renamed to `IDropdownItem`.
+
+#### Component styling
+The styling for each component should be organized within each component folder to make everything component-specific immediately available to the developer – although this might be a matter of personal preference.
 
 ### UX issues
-There are several UX issues that could be improved. One example is the dropdown that does not have a max height and scrolling within the container – the entire page will scroll.
+There are several layout and/or UX issues that should be improved.
+
+#### Dropdown scrolling
+The dropdown does not have a max height nor scrolling within the container – the entire page will scroll.
 
 #### No indications of no results
-There is nothing indicating that no results were found during the data fetching, if this was the case. 
+There is currently nothing indicating that no results were found during the data fetching, if this was the case. 
 
 #### Limited error handling
-Currently, the UI has limited error messages when something does not work as expected. This could be improved.
+Currently, the UI has limited error messages when something does not work as expected. This needs to be improved.
 
 ### Testing does not work as expected
 Jest is installed, but not properly configured, although there are a couple tests added in order to show the idea.
